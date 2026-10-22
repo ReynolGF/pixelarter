@@ -8,10 +8,10 @@ import { isDigit, isLetter } from "./utils";
 
 export class Lexer {
   private readonly text: string;
-  private position: number = 0;
+  private pos: number = 0;
 
   private getCurrent = () =>
-    this.position >= this.text.length ? "\0" : this.text[this.position];
+    this.pos >= this.text.length ? "\0" : this.text[this.pos];
 
   constructor(text: string) {
     this.text = text;
@@ -20,44 +20,44 @@ export class Lexer {
   public getTokens(): Token[] {
     let tokens: Token[] = [];
 
-    while (this.position < this.text.length) {
+    while (this.pos < this.text.length) {
       tokens.push(this.getToken());
-      this.position++;
+      this.pos++;
     }
     return tokens;
   }
 
   private getToken(): Token {
     while (this.getCurrent() == " ") {
-      this.position++;
+      this.pos++;
     }
 
     if (isDigit(this.getCurrent())) {
-      let number = "";
+      let num = "";
 
       do {
-        number += this.getCurrent();
-        this.position++;
+        num += this.getCurrent();
+        this.pos++;
       } while (isDigit(this.getCurrent()));
 
-      this.position--;
+      this.pos--;
 
-      return new NumberToken(number, "NumberToken");
+      return new NumberToken(num, "NumberToken");
     }
     if (isLetter(this.getCurrent())) {
       let word = "";
       do {
         word += this.getCurrent();
-        this.position++;
+        this.pos++;
       } while (isLetter(this.getCurrent()));
 
-      this.position--;
+      this.pos--;
 
       switch (word) {
-        case "True":
-          return new BooleanToken("True", "BooleanToken");
-        case "False":
-          return new BooleanToken("False", "BooleanToken");
+        case "true":
+          return new BooleanToken("true", "BooleanToken");
+        case "false":
+          return new BooleanToken("false", "BooleanToken");
         default:
           return new InvalidToken(word, "InvalidToken");
       }
