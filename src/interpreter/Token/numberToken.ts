@@ -1,4 +1,4 @@
-import type { Token } from "./Token";
+import type { Token } from "./token";
 
 export class NumberToken implements Token {
   readonly text: string;
