@@ -2,7 +2,9 @@ import type { Token } from "./token";
 
 export class MinusToken implements Token {
   readonly text: string;
-  constructor(text: string) {
+  readonly type: string;
+  constructor(text: string, type: string) {
     this.text = text;
+    this.type = type;
   }
 }

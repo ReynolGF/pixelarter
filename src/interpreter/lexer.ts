@@ -1,9 +1,10 @@
+import { BooleanToken } from "./Token/booleanToken";
 import { InvalidToken } from "./Token/invalidToken";
 import { MinusToken } from "./Token/minusToken";
 import { NumberToken } from "./Token/numberToken";
 import { PlusToken } from "./Token/plusToken";
 import type { Token } from "./Token/token";
-import { isDigit } from "./utils";
+import { isDigit, isLetter } from "./utils";
 
 export class Lexer {
   private readonly text: string;
@@ -41,16 +42,34 @@ export class Lexer {
 
       this.position--;
 
-      return new NumberToken(number);
+      return new NumberToken(number, "NumberToken");
+    }
+    if (isLetter(this.getCurrent())) {
+      let word = "";
+      do {
+        word += this.getCurrent();
+        this.position++;
+      } while (isLetter(this.getCurrent()));
+
+      this.position--;
+
+      switch (word) {
+        case "True":
+          return new BooleanToken("True", "BooleanToken");
+        case "False":
+          return new BooleanToken("False", "BooleanToken");
+        default:
+          return new InvalidToken(word, "InvalidToken");
+      }
     }
 
     switch (this.getCurrent()) {
       case "+":
-        return new PlusToken("+");
+        return new PlusToken("+", "PlusToken");
       case "-":
-        return new MinusToken("-");
+        return new MinusToken("-", "MinusToken");
       default:
-        return new InvalidToken(this.getCurrent());
+        return new InvalidToken(this.getCurrent(), "InvalidToken");
     }
   }
 }
