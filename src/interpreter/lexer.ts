@@ -1,8 +1,8 @@
-import { InvalidToken } from "./Token/InvalidToken";
+import { InvalidToken } from "./Token/invalidToken";
 import { MinusToken } from "./Token/minusToken";
-import { NumberToken } from "./Token/NumberToken";
-import { PlusToken } from "./Token/PlusToken";
-import type { Token } from "./Token/Token";
+import { NumberToken } from "./Token/numberToken";
+import { PlusToken } from "./Token/plusToken";
+import type { Token } from "./Token/token";
 import { isDigit } from "./utils";
 
 export class Lexer {
