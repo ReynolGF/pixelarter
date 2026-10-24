@@ -1,4 +1,5 @@
 import { BooleanToken } from "./Token/booleanToken";
+import { EndLineToken } from "./Token/endLineToken";
 import { InvalidToken } from "./Token/invalidToken";
 import { MinusToken } from "./Token/minusToken";
 import { NumberToken } from "./Token/numberToken";
@@ -20,7 +21,7 @@ export class Lexer {
   public getTokens(): Token[] {
     let tokens: Token[] = [];
 
-    while (this.pos < this.text.length) {
+    while (this.pos <= this.text.length) {
       tokens.push(this.getToken());
       this.pos++;
     }
@@ -28,6 +29,9 @@ export class Lexer {
   }
 
   private getToken(): Token {
+    if (this.pos >= this.text.length)
+      return new EndLineToken("\n", "EndLineToken");
+
     while (this.getCurrent() == " ") {
       this.pos++;
     }
