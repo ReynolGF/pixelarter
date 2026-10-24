@@ -1,7 +1,9 @@
 import type { Expression } from "./expression";
 
 export class NumberExpression implements Expression {
-  public readonly num: number;
+  private readonly num: number;
+
+  public evaluate = () => this.num;
 
   constructor(num: number) {
     this.num = num;

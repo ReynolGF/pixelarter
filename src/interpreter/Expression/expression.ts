@@ -1,1 +1,3 @@
-export interface Expression {}
+export interface Expression {
+  evaluate: () => any;
+}
