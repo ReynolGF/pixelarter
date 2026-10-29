@@ -6,7 +6,7 @@ import { Parser } from "./interpreter/parser";
 import type { Expression } from "./interpreter/Expression/expression";
 
 function App() {
-  const textInput = "1*2*4*5/40";
+  const textInput = "2*4/2*5+1";
 
   const [tokens, setTokens] = useState<Token[]>([]);
   const [ast, setAst] = useState<Expression>();

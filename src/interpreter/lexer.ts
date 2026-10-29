@@ -1,9 +1,11 @@
 import { BooleanToken } from "./Token/booleanToken";
+import { CloseParenthesisToken } from "./Token/closeParenthesisToken";
 import { DivideByToken } from "./Token/divideByToken";
 import { EndLineToken } from "./Token/endLineToken";
 import { InvalidToken } from "./Token/invalidToken";
 import { MinusToken } from "./Token/minusToken";
 import { NumberToken } from "./Token/numberToken";
+import { OpenParenthesisToken } from "./Token/openParenthesisToken";
 import { PlusToken } from "./Token/plusToken";
 import { TimesToken } from "./Token/timesToken";
 import type { Token } from "./Token/token";
@@ -78,6 +80,10 @@ export class Lexer {
         return new TimesToken("*", "TimesToken");
       case "/":
         return new DivideByToken("/", "DivideByToken");
+      case "(":
+        return new OpenParenthesisToken("(", "OpenParenthesisToken");
+      case ")":
+        return new CloseParenthesisToken(")", "CloseParenthesisToken");
       default:
         return new InvalidToken(this.getCurrent(), "InvalidToken");
     }

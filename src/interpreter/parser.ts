@@ -73,7 +73,14 @@ export class Parser {
 
   private e(currentToken: Token): Expression {
     this.nextToken();
-
+    if (currentToken.type == "OpenParenthesisToken") {
+      let expression = this.parse();
+      if (this.getCurrent().type != "CloseParenthesisToken") {
+        return new ErrorExpression("SINTAXERROR: Se esperaba un )");
+      }
+      this.nextToken();
+      return expression;
+    }
     if (currentToken.type == "NumberToken")
       return new NumberExpression(Number(currentToken.text));
     if (currentToken.type == "BooleanToken")
