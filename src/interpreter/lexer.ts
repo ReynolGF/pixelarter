@@ -1,9 +1,11 @@
 import { BooleanToken } from "./Token/booleanToken";
+import { DivideByToken } from "./Token/divideByToken";
 import { EndLineToken } from "./Token/endLineToken";
 import { InvalidToken } from "./Token/invalidToken";
 import { MinusToken } from "./Token/minusToken";
 import { NumberToken } from "./Token/numberToken";
 import { PlusToken } from "./Token/plusToken";
+import { TimesToken } from "./Token/timesToken";
 import type { Token } from "./Token/token";
 import { isDigit, isLetter } from "./utils";
 
@@ -72,6 +74,10 @@ export class Lexer {
         return new PlusToken("+", "PlusToken");
       case "-":
         return new MinusToken("-", "MinusToken");
+      case "*":
+        return new TimesToken("*", "TimesToken");
+      case "/":
+        return new DivideByToken("/", "DivideByToken");
       default:
         return new InvalidToken(this.getCurrent(), "InvalidToken");
     }

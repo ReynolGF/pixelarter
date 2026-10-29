@@ -1,5 +1,7 @@
+import { BinaryDivideByExpression } from "./Expression/BinaryExpression/binaryDivideByExpression";
 import { BinaryMinusExpression } from "./Expression/BinaryExpression/binaryMinusExpression";
 import { BinarySumExpression } from "./Expression/BinaryExpression/binarySumExpression";
+import { BinaryTimesExpression } from "./Expression/BinaryExpression/binaryTimesExpression";
 import { BooleanExpression } from "./Expression/booleanExpression";
 import { ErrorExpression } from "./Expression/errorExpression";
 import type { Expression } from "./Expression/expression";
@@ -19,10 +21,11 @@ export class Parser {
   constructor(tokens: Token[]) {
     this.tokens = tokens;
   }
-  public Parse(): Expression {
-    console.log(this.getCurrent());
-    let left: Expression = this.E(this.getCurrent());
-    console.log(this.getCurrent());
+
+  public parse = (): Expression => this.t();
+
+  private t(): Expression {
+    let left: Expression = this.f();
 
     while (
       this.getCurrent().type == "PlusToken" ||
@@ -32,11 +35,7 @@ export class Parser {
 
       this.nextToken();
 
-      console.log(this.getCurrent());
-
-      let right: Expression = this.E(this.getCurrent());
-
-      console.log(this.getCurrent());
+      let right: Expression = this.f();
 
       if (currentOperator.type == "PlusToken") {
         left = new BinarySumExpression(left, right);
@@ -48,8 +47,31 @@ export class Parser {
     }
     return left;
   }
+  private f(): Expression {
+    let left: Expression = this.e(this.getCurrent());
 
-  private E(currentToken: Token): Expression {
+    while (
+      this.getCurrent().type == "TimesToken" ||
+      this.getCurrent().type == "DivideByToken"
+    ) {
+      let currentOperator = this.getCurrent();
+
+      this.nextToken();
+
+      let right: Expression = this.e(this.getCurrent());
+
+      if (currentOperator.type == "TimesToken") {
+        left = new BinaryTimesExpression(left, right);
+      }
+
+      if (currentOperator.type == "DivideByToken") {
+        left = new BinaryDivideByExpression(left, right);
+      }
+    }
+    return left;
+  }
+
+  private e(currentToken: Token): Expression {
     this.nextToken();
 
     if (currentToken.type == "NumberToken")
