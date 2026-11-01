@@ -1,4 +1,4 @@
-import type { Expression } from "./expression";
+import type { Expression } from "../expression";
 
 export class ErrorExpression implements Expression {
   private readonly message: string;

@@ -4,6 +4,7 @@ import { DivideByToken } from "./Token/divideByToken";
 import { EndLineToken } from "./Token/endLineToken";
 import { InvalidToken } from "./Token/invalidToken";
 import { MinusToken } from "./Token/minusToken";
+import { ModuleToken } from "./Token/moduleToken";
 import { NumberToken } from "./Token/numberToken";
 import { OpenParenthesisToken } from "./Token/openParenthesisToken";
 import { PlusToken } from "./Token/plusToken";
@@ -80,6 +81,8 @@ export class Lexer {
         return new TimesToken("*", "TimesToken");
       case "/":
         return new DivideByToken("/", "DivideByToken");
+      case "%":
+        return new ModuleToken("%", "ModuleToken");
       case "(":
         return new OpenParenthesisToken("(", "OpenParenthesisToken");
       case ")":

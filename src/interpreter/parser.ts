@@ -3,7 +3,7 @@ import { BinaryMinusExpression } from "./Expression/BinaryExpression/binaryMinus
 import { BinarySumExpression } from "./Expression/BinaryExpression/binarySumExpression";
 import { BinaryTimesExpression } from "./Expression/BinaryExpression/binaryTimesExpression";
 import { BooleanExpression } from "./Expression/booleanExpression";
-import { ErrorExpression } from "./Expression/errorExpression";
+import { ErrorExpression } from "./Expression/errors/errorExpression";
 import type { Expression } from "./Expression/expression";
 import { NumberExpression } from "./Expression/numberExpression";
 import type { Token } from "./Token/token";
@@ -52,7 +52,8 @@ export class Parser {
 
     while (
       this.getCurrent().type == "TimesToken" ||
-      this.getCurrent().type == "DivideByToken"
+      this.getCurrent().type == "DivideByToken" ||
+      this.getCurrent().type == "ModuleToken"
     ) {
       let currentOperator = this.getCurrent();
 
@@ -63,8 +64,10 @@ export class Parser {
       if (currentOperator.type == "TimesToken") {
         left = new BinaryTimesExpression(left, right);
       }
-
       if (currentOperator.type == "DivideByToken") {
+        left = new BinaryDivideByExpression(left, right);
+      }
+      if (currentOperator.type == "ModuleToken") {
         left = new BinaryDivideByExpression(left, right);
       }
     }
